@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Result</title>
+        <style>
+            .red {
+                color: red;
+            }
+
+            .green {
+                color: green;
+            }
+        </style>
+        <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+    </head>
+
+    <body>
+        <h1>
+            <span style="color: #008CBA;">Health-check results for application:</span>
+            <strong> <span style="color: #555;">{{ app_name }}</span></strong>
+        </h1>
+        {% for url, status_code in zip(url_list, status_codes) %}
+            {% if status_code|default("Not accessible") == 200 %}
+                <p class="green">URL: {{ url }} is running (status code: {{ status_code }})</p>
+            {% elif status_code|default("Not accessible") == "Not accessible" %}
+                 <p class="red">URL: {{ url }} is not accessible</p>
+            {% else %}
+                <p class="red">URL: {{ url }} is not running (status code: {{ status_code }})</p>
+            {% endif %}
+
+        {% endfor %}
+        <br>
+        <br>
+        <p>Do you want to perform another Health Check</p>
+        <button class="btn btn-primary" id="upload-another-button">Continue Health-check</button>
+        <input type='button' id='but_screenshot' value='Take screenshot' onclick='screenshot();'><br/>
+
+
+
+        <script type='text/javascript'>
+          var uploadAnotherButton = document.getElementById("upload-another-button");
+          uploadAnotherButton.addEventListener("click", function() {
+            window.location.href = "/";
+          });
+          function screenshot() {
+              html2canvas(document.body).then(function(canvas) {
+                   document.body.appendChild(canvas);
+                });
+            }
+        </script>
+
+    </body>
+</html>

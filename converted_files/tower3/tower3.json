@@ -1,0 +1,17 @@
+{
+    "application-name": {
+        "production": {
+            "urls": []
+        }
+    },
+    "smart": {
+        "development": {
+            "urls": [
+                "https://www.google.com\n",
+                "https://www.fb.com\n",
+                "https://www.yahoo.com\n",
+                "https://www.yhtin.org"
+            ]
+        }
+    }
+}

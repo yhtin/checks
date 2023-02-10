@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Your Application Here</title>
+    <style>
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 30%;
+            margin: 10% auto;
+            padding: 30px;
+            border: 1px solid lightgray;
+            border-radius: 5px;
+        }
+        label {
+            display: block;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 200px;
+            height: 30px;
+            padding: 5px;
+            font-size: 16px;
+            margin-top: 10px;
+            border: 1px solid lightgray;
+            border-radius: 5px;
+        }
+        button {
+            width: 120px;
+            height: 40px;
+            margin-top: 20px;
+            font-size: 16px;
+            background-color: lightblue;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+    <body>
+        <form action="{{ url_for('convert') }}" method="post" enctype="multipart/form-data">
+           <div>
+                <label for="tower_name">Tower Name:</label>
+                <select name = "tower_name">
+                  <option selected="true" disabled="disabled">Tower-name</option>
+                  <option value="tower1">tower1</option>
+                  <option value="tower2">tower2</option>
+                  <option value="tower3">tower3</option>
+                  <option value="tower4">tower4</option>
+                </select>
+            </div>
+            <div>
+                <label for="application_name">Application Name:</label>
+                <input type="text" id="application_name" name="application_name" value="Application Name">
+
+                <script>
+                  const input = document.getElementById("application_name");
+                  input.addEventListener("click", function() {
+                    if (this.value === "Application Name") {
+                      this.value = "";
+                    }
+                  });
+                </script>
+
+            </div>
+            <div>
+                <label for="Environment">Environment:</label>
+                <select name = "environment">
+                  <option selected="true" disabled="disabled">Environment-name</option>
+                  <option value="production">Production</option>
+                  <option value="qa/stage/test">Qa/Stage/Test</option>
+                  <option value="development">Development</option>
+                </select>
+            </div>
+            <div>
+                <label for="file">Text File:</label>
+                <input type="file" id="file" name="file">
+            </div>
+            <button type="submit">Convert</button>
+        </form>
+    </body>
+</html>
