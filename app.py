@@ -37,7 +37,7 @@ def index():
                 print(f"URL: {url} is not accessible due to an error: {e}")
                 status_codes.append(None)
 
-        return render_template("result.html", url_list=url_list, status_codes=status_codes, zip=zip , app_name=app_name)
+        return render_template("result.html", url_list=url_list, status_codes=status_codes, zip=zip , app_name=app_name, env_name = env_name)
     else:
         app_list = []
 

@@ -13,5 +13,23 @@
                 "https://www.yhtin.org"
             ]
         }
+    },
+    "new_application": {
+        "production": {
+            "urls": [
+                "https://fb.sie.com\n",
+                "https://fse.dco.com\n",
+                "https://slide.com\n",
+                "https://google.com\n"
+            ]
+        }
+    },
+    "hybris": {
+        "development": {
+            "urls": [
+                "https://google.com\n",
+                "https://facebook.com"
+            ]
+        }
     }
 }
