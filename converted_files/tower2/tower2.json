@@ -13,5 +13,15 @@
                 "https://www.yhtin.org"
             ]
         }
+    },
+    "pimpt": {
+        "production": {
+            "urls": [
+                "https://fb.sie.com\n",
+                "https://fse.dco.com\n",
+                "https://slide.com\n",
+                "https://google.com\n"
+            ]
+        }
     }
 }

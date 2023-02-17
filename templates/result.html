@@ -18,6 +18,39 @@
                 padding: 5px;
                 text-align: left;
             }
+            .url-container {
+                width: 30%;
+                height: 30;
+                border: 1px solid #ccc;
+                margin-bottom: 20px;
+
+            }
+            .url-container img {
+                max-width: 100%;
+                max-height: 100%;
+            }
+
+            #button-container {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                display: flex;
+                flex-direction: row;
+                gap: 10px;
+            }
+              #upload-another-button, #screenshot-button {
+                padding: 10px 20px;
+                font-size: 16px;
+                border: none;
+                border-radius: 4px;
+                color: black;
+                background-color: #007bff;
+                cursor: pointer;
+            }
+              #screenshot-button {
+                background-color: #28a745;
+            }
+
         </style>
         <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
     </head>
@@ -25,6 +58,12 @@
         <h1>
             <span style="color: #008CBA;">Health-check results for application:</span>
             <strong> <span style="color: #555;">{{ app_name }}-{{env_name}}</span></strong>
+<!--            <p>Do you want to perform another Health Check</p>-->
+            <div id="button-container">
+                <button class="btn btn-primary" id="upload-another-button">Continue Health-check</button>
+                <button id="screenshot-button">Take Screenshot</button>
+
+            </div>
         </h1>
         <table>
             <thead>
@@ -32,6 +71,7 @@
                     <th>URL Name</th>
                     <th>Status</th>
                     <th>Status Code</th>
+                    <th>Display Image</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,12 +81,23 @@
                         {% if status_code|default("Not accessible") == 200 %}
                             <td class="green">Running</td>
                             <td>{{ status_code }}</td>
+                            <td>
+                                <div class="url-container">
+                                    <img src="{{ screenshot_dict[url] }}" alt="{{ url }}"/>
+                                </div>
+                            </td>
                         {% elif status_code|default("Not accessible") == "Not accessible" %}
                             <td class="red">Not accessible</td>
                             <td>-</td>
+                            <td>
+                                <div class="url-container">
+                                    <img src="{{ screenshot_dict[url] }}" alt="{{ url }}"/>
+                                </div>
+                            </td>
                         {% else %}
                             <td class="red">Not running</td>
                             <td>{{ status_code }}</td>
+                            <td style="background-color:#FF0000">unable to load the page</td>
                         {% endif %}
                     </tr>
                 {% endfor %}
@@ -54,8 +105,8 @@
         </table>
         <br>
         <br>
-        <p>Do you want to perform another Health Check</p>
-        <button class="btn btn-primary" id="upload-another-button">Continue Health-check</button>
+
+
 
         <script type='text/javascript'>
             var uploadAnotherButton = document.getElementById("upload-another-button");
@@ -64,7 +115,6 @@
             });
         </script>
 
-        <button id="screenshot-button">Take Screenshot</button>
         <script type='text/javascript'>
             var screenshotButton = document.getElementById("screenshot-button");
             screenshotButton.addEventListener("click", screenshot);
@@ -74,7 +124,7 @@
               html2canvas(document.body).then(function(canvas) {
                 var context = canvas.getContext("2d");
                 context.font = "30px Arial";
-                context.fillText(date.toLocaleString(), 1000, 400);
+                context.fillText(date.toLocaleString(), 1000, 125);
                 document.body.appendChild(canvas);
 
               });

@@ -1,19 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Add Your Application Here</title>
+    <title>Upload Your Application</title>
     <style>
-        form {
+         h1 {
+            font-size: 40px;
+            text-align: center;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-color: #e20783;
+            color: #ff0000;
+         }
+
+         form {
             display: flex;
             flex-direction: column;
             align-items: center;
             width: 30%;
-            margin: 10% auto;
+            margin: 5% auto; /* reduce top margin to move the form up */
             padding: 30px;
             border: 1px solid lightgray;
             border-radius: 5px;
-        }
-        label {
+         }
+         label {
             display: block;
             margin-top: 20px;
             font-weight: bold;
@@ -40,6 +50,7 @@
     </style>
 </head>
     <body>
+        <h1> Add Your Application</h1>
         <form action="{{ url_for('convert') }}" method="post" enctype="multipart/form-data">
            <div>
                 <label for="tower_name">Tower Name:</label>
