@@ -10,66 +10,75 @@
             .green {
                 color: green;
             }
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+            }
+            th, td {
+                padding: 5px;
+                text-align: left;
+            }
         </style>
         <script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
     </head>
     <body>
-      <h1>
-        <span style="color: #008CBA;">Health-check results for application:</span>
-        <strong> <span style="color: #555;">{{ app_name }}-{{env_name}}</span></strong>
-      </h1>
-      {% for url, status_code in zip(url_list, status_codes) %}
-        {% if status_code|default("Not accessible") == 200 %}
-          <p class="green">URL: {{ url }} is running (status code: {{ status_code }})</p>
-        {% elif status_code|default("Not accessible") == "Not accessible" %}
-          <p class="red">URL: {{ url }} is not accessible</p>
-        {% else %}
-          <p class="red">URL: {{ url }} is not running (status code: {{ status_code }})</p>
-        {% endif %}
-      {% endfor %}
-      <br>
-      <br>
-      <p>Do you want to perform another Health Check</p>
-      <button class="btn btn-primary" id="upload-another-button">Continue Health-check</button>
+        <h1>
+            <span style="color: #008CBA;">Health-check results for application:</span>
+            <strong> <span style="color: #555;">{{ app_name }}-{{env_name}}</span></strong>
+        </h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>URL Name</th>
+                    <th>Status</th>
+                    <th>Status Code</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for url, status_code in zip(url_list, status_codes) %}
+                    <tr>
+                        <td><a href="{{ url }}" target="_blank">{{ url }}</a></td>
+                        {% if status_code|default("Not accessible") == 200 %}
+                            <td class="green">Running</td>
+                            <td>{{ status_code }}</td>
+                        {% elif status_code|default("Not accessible") == "Not accessible" %}
+                            <td class="red">Not accessible</td>
+                            <td>-</td>
+                        {% else %}
+                            <td class="red">Not running</td>
+                            <td>{{ status_code }}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <br>
+        <p>Do you want to perform another Health Check</p>
+        <button class="btn btn-primary" id="upload-another-button">Continue Health-check</button>
 
-      <script type='text/javascript'>
-        var uploadAnotherButton = document.getElementById("upload-another-button");
-        uploadAnotherButton.addEventListener("click", function() {
-          window.location.href = "/";
-        });
-      </script>
+        <script type='text/javascript'>
+            var uploadAnotherButton = document.getElementById("upload-another-button");
+            uploadAnotherButton.addEventListener("click", function() {
+              window.location.href = "/";
+            });
+        </script>
 
-      <button id="screenshot-button">Take Screenshot</button>
-      <script type='text/javascript'>
-        var screenshotButton = document.getElementById("screenshot-button");
-        screenshotButton.addEventListener("click", screenshot);
+        <button id="screenshot-button">Take Screenshot</button>
+        <script type='text/javascript'>
+            var screenshotButton = document.getElementById("screenshot-button");
+            screenshotButton.addEventListener("click", screenshot);
 
-        function screenshot() {
-          var date = new Date();
-          html2canvas(document.body).then(function(canvas) {
-            var context = canvas.getContext("2d");
-            context.font = "30px Arial";
-            context.fillText(date.toLocaleString(), 10, 50);
-            document.body.appendChild(canvas);
+            function screenshot() {
+              var date = new Date();
+              html2canvas(document.body).then(function(canvas) {
+                var context = canvas.getContext("2d");
+                context.font = "30px Arial";
+                context.fillText(date.toLocaleString(), 1000, 400);
+                document.body.appendChild(canvas);
 
-          });
-        }
-      </script>
- </body>
-</html>
-
-
-<!--        <script type='text/javascript'>-->
-<!--          var uploadAnotherButton = document.getElementById("upload-another-button");-->
-<!--          uploadAnotherButton.addEventListener("click", function() {-->
-<!--            window.location.href = "/";-->
-<!--          });-->
-<!--          function screenshot() {-->
-<!--              html2canvas(document.body).then(function(canvas) {-->
-<!--                   document.body.appendChild(canvas);-->
-<!--                });-->
-<!--            }-->
-<!--        </script>-->
-
+              });
+            }
+        </script>
     </body>
 </html>

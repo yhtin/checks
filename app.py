@@ -31,7 +31,6 @@ def index():
             try:
                 response = requests.get(url)
                 status_codes.append(response.status_code)
-                webbrowser.open_new_tab(url)
             except requests.exceptions.RequestException as e:
                 webbrowser.open_new_tab(url)
                 print(f"URL: {url} is not accessible due to an error: {e}")
