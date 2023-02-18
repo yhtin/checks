@@ -5,6 +5,9 @@
         <style>
             .red {
                 color: red;
+                width: 280px;
+                height: 170px;
+
             }
 
             .green {
@@ -16,19 +19,47 @@
             }
             th, td {
                 padding: 5px;
-                text-align: left;
+                text-align: center;
             }
             .url-container {
-                width: 35%;
-                height: 35%;
-                border: 1px solid #ccc;
-                margin-bottom: 20px;
+                  width: 700px;
+                  height: 260px;
+                  border: 1px solid #ccc;
+                  margin-bottom: 20px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+
 
             }
             .url-container img {
                 max-width: 100%;
                 max-height: 100%;
             }
+            #status-container {
+                display: flex;
+                top: 20px;
+                right: 30px;
+                flex-direction: row;
+                gap: 5px;
+
+
+              }
+              #running-label, #not-running-label {
+
+                font-size: 16px;
+                font-weight: bold;
+                font-size: 16px;
+
+              }
+
+              #running-label {
+                    color: green;
+                  }
+
+              #not-running-label {
+                color: red;
+              }
 
             #button-container {
                 position: fixed;
@@ -56,8 +87,13 @@
     </head>
     <body>
         <h1>
-            <span style="color: #008CBA;">Health-check results for application:</span>
-            <strong> <span style="color: #555;">{{ app_name }}-{{env_name}}</span></strong>
+            <span style="color: #3498db; font-weight: bold; font-size: 25px;">Health Check Results for:</span>
+            <span style="color: #34495e; font-weight: bold; font-size: 25px;">{{ app_name }}-{{env_name}}</span>
+            <div id="status-container">
+              <span id="running-label"></span>
+              <span id="not-running-label"></span>
+            </div>
+
 <!--            <p>Do you want to perform another Health Check</p>-->
             <div id="button-container">
                 <button class="btn btn-primary" id="upload-another-button">Continue Health-check</button>
@@ -68,10 +104,10 @@
         <table>
             <thead>
                 <tr>
-                    <th>URL Name</th>
+                    <th>Application-URL</th>
                     <th>Status</th>
-                    <th>Status Code</th>
-                    <th>Display Image</th>
+                    <th>Status-Code</th>
+                    <th>Display-Image</th>
                 </tr>
             </thead>
             <tbody>
@@ -87,15 +123,15 @@
                                 </div>
                             </td>
                         {% elif status_code|default("Not accessible") == "Not accessible" %}
-                            <td class="red">Not accessible</td>
-                            <td>-</td>
+                            <td class="red">Not Working</td>
+                            <td>{{ status_code }}</td>
                             <td>
                                 <div class="url-container">
                                     <img src="{{ screenshot_dict[url] }}" alt="{{ url }}"/>
                                 </div>
                             </td>
                         {% else %}
-                            <td class="red">Not running</td>
+                            <td class="red">Not Working</td>
                             <td>{{ status_code }}</td>
                             <td style="background-color:#FF0000">unable to load the page</td>+
                         {% endif %}
@@ -124,11 +160,37 @@
               html2canvas(document.body).then(function(canvas) {
                 var context = canvas.getContext("2d");
                 context.font = "30px Arial";
-                context.fillText(date.toLocaleString(), 1000, 125);
+                context.fillText(date.toLocaleString(), 1150, 105);
                 document.body.appendChild(canvas);
 
               });
             }
+
+          var runningCount = 0;
+          var notRunningCount = 0;
+          var cells = document.querySelectorAll('td');
+
+          for (var i = 0; i < cells.length; i++) {
+            if (cells[i].classList.contains('green')) {
+              runningCount++;
+            } else if (cells[i].classList.contains('red')) {
+              notRunningCount++;
+            }
+          }
+
+          var runningLabel = document.querySelector('#running-label');
+          runningLabel.innerText = 'Running: ' + runningCount;
+
+          var notRunningLabel = document.querySelector('#not-running-label');
+          notRunningLabel.innerText = 'Not running: ' + notRunningCount;
         </script>
     </body>
+<!--<footer style="position: fixed; bottom: 0;">-->
+<!--  <div class="footer-container" style="background-color: #E0E0E0; color: #A0A0A0;">-->
+<!--    <div class="footer-bottom">-->
+<!--      <p>&copy; 2023 IAOC HealthChecks.version 1.0</p>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</footer>-->
+
 </html>
